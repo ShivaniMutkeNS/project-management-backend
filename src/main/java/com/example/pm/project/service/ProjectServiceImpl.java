@@ -9,6 +9,7 @@ import com.example.pm.project.exception.ProjectException;
 import com.example.pm.project.model.Project;
 import com.example.pm.project.model.ProjectUser;
 import com.example.pm.project.model.ProjectUserKey;
+import com.example.pm.project.model.Tags;
 import com.example.pm.project.repository.ProjectRepository;
 import com.example.pm.project.repository.ProjectUserRepository;
 import com.example.pm.user.exception.UserException;
@@ -21,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,8 +74,8 @@ public class ProjectServiceImpl implements ProjectService {
         saveProject.setTeamMembers(projectUserList);
 
         Chat chat = new Chat();
-       // chat.setProject(saveProject);
-        Chat projectChat = chatService.saveChat(chat,project.getOwner());
+        chat.setProject(saveProject);
+        Chat projectChat = chatService.saveChat(chat,user);
 
         saveProject.setChat(projectChat);
 
@@ -98,19 +100,26 @@ public class ProjectServiceImpl implements ProjectService {
         // Find projects by team members or owner
         List<Project> projects = projectRepository.findByOwnerOrTeamMember(user);
 
-        if (category != null) {
+        if (category == null || category.equalsIgnoreCase("all")) {
+            projects = projects;
+        } else {
             projects = projects.stream()
-                    .filter(project -> project.getCategory().equals(category))
+                    .filter(project -> project.getCategory().equalsIgnoreCase(category))
                     .collect(Collectors.toList());
         }
-
-        if (tag != null) {
-            projects = projects.stream()
-                    .filter(project -> project.getTags().contains(tag))
-                    .collect(Collectors.toList());
+        if (tag == null || tag.toString().equals(Tags.ALL.toString())) {
+            // Return all projects if tag is null or equals "ALL"
+            return projects;
         }
 
-        return projects;
+        // Use stream filtering for efficient filtering
+        List<Project> filteredProjects = projects.stream()
+                .filter(project -> project.getTags().stream() // Assuming getTags() returns List<String>
+                        .anyMatch(projectTag -> projectTag.toString().equalsIgnoreCase(tag)))
+                .collect(Collectors.toList());
+
+
+        return filteredProjects;
     }
 
 
