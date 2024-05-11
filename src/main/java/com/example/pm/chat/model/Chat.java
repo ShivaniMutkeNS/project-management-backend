@@ -23,11 +23,11 @@ public class Chat {
 
     private String name;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "project_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonIgnore
     private Project project;//one project can have one chat
 
     @JsonIgnore
@@ -37,6 +37,7 @@ public class Chat {
     private List<Messages> messages;
 
     @ToString.Exclude
+    @JsonIgnore
     @OneToMany(mappedBy = "chat")
     List<ChatUser> participants;
 

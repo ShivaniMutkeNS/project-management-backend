@@ -33,15 +33,15 @@ public class ChatServiceImpl implements ChatService {
 
 
     @Override
-    public Chat saveChat(Chat chat) {
+    public Chat saveChat(Chat chat,User user) {
         Chat savedChat = chatRepository.save(chat);
 
         ChatUser chatUser = new ChatUser();
 
-        ChatUserKey chatUserKey = new ChatUserKey(savedChat.getId(), chat.getProject().getOwner().getId());
+        ChatUserKey chatUserKey = new ChatUserKey(savedChat.getId(), user.getId());
 
         chatUser.setId(chatUserKey);
-        chatUser.setUser(chat.getProject().getOwner());
+        chatUser.setUser(user);
         chatUser.setChat(savedChat);
 
         chatUserRepository.save(chatUser);

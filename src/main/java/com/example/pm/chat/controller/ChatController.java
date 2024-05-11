@@ -25,11 +25,11 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Chat> createChat(@RequestBody Chat chat) throws ProjectException {
-        Chat createChat = chatService.saveChat(chat);
-        return ResponseEntity.ok(createChat);
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<Chat> createChat(@RequestBody Chat chat) throws ProjectException {
+//        Chat createChat = chatService.saveChat(chat);
+//        return ResponseEntity.ok(createChat);
+//    }
 
     @GetMapping("/project/{projectId}")
     public ResponseEntity<List<Chat>> getChatsByProjectId(@PathVariable Long projectId) throws ChatException, ProjectException, ChatException {

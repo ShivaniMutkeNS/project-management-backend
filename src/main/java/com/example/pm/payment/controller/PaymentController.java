@@ -29,9 +29,7 @@ public class PaymentController {
 	@Autowired
 	private UserService userService;
 
-	
 
-	
 	@PostMapping("/payments/{planType}")
 	public ResponseEntity<PaymentLinkResponse>createPaymentLink(@PathVariable String planType,
 																@RequestHeader("Authorization")String jwt)

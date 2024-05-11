@@ -72,8 +72,8 @@ public class ProjectServiceImpl implements ProjectService {
         saveProject.setTeamMembers(projectUserList);
 
         Chat chat = new Chat();
-        chat.setProject(saveProject);
-        Chat projectChat = chatService.saveChat(chat);
+       // chat.setProject(saveProject);
+        Chat projectChat = chatService.saveChat(chat,project.getOwner());
 
         saveProject.setChat(projectChat);
 
@@ -237,7 +237,7 @@ public class ProjectServiceImpl implements ProjectService {
                         chatUser.setId(chatUserKey);
                     }
                     chatUserRepository.save(chatUser);
-                    chatService.saveChat(chat);
+                    chatService.saveChat(chat,existingProject.getOwner());
                 }
             } else {
                 throw new UserException("USer is already there");

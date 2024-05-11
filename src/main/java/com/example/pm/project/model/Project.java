@@ -36,7 +36,7 @@ public class Project {
     @ManyToOne
     private User owner;//one user can create many projects
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, orphanRemoval = true)
     List<ProjectUser> teamMembers;
 

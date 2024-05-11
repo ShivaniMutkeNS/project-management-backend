@@ -1,6 +1,7 @@
 package com.example.pm.project.model;
 
 import com.example.pm.user.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +20,7 @@ public class ProjectUser {
     @ToString.Exclude
     User user;
 
-
+   @JsonIgnore
     @ManyToOne
     @MapsId("projectId")
     @ToString.Exclude
