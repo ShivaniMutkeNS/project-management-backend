@@ -3,6 +3,7 @@ package com.example.pm.message.serviceimpl;
 
 import com.example.pm.chat.exception.ChatException;
 import com.example.pm.chat.model.Chat;
+import com.example.pm.chat.repository.ChatRepository;
 import com.example.pm.message.model.Messages;
 import com.example.pm.message.repository.MessageRepository;
 import com.example.pm.message.service.MessageService;
@@ -30,6 +31,9 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private ChatRepository chatRepository;
+
     @Override
     public Messages sendMessage(Long senderId, Long projectId, String content) throws UserException, ChatException, ProjectException, ProjectException {
         User sender = userRepository.findById(senderId)
@@ -45,6 +49,7 @@ public class MessageServiceImpl implements MessageService {
         Messages savedMessage=messageRepository.save(message);
 
         chat.getMessages().add(savedMessage);
+        chatRepository.save(chat);
         return savedMessage;
     }
 

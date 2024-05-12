@@ -181,7 +181,8 @@ public class ProjectController {
         User user=userService.findUserProfileByJwt(jwt);
 
         Invitation invitation = invitationService.acceptInvitation(token,user.getId());
-        projectService.addUserToProject(invitation.getProjectId(),user.getId());
+        User invitedUser= userService.findUserByEmail(invitation.getEmail());
+        projectService.addUserToProject(invitation.getProjectId(),invitedUser.getId());
 
         return new ResponseEntity<>(invitation,HttpStatus.ACCEPTED);
     }
