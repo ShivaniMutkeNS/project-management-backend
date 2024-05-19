@@ -5,10 +5,7 @@ import com.example.pm.issue.model.Issue;
 import com.example.pm.project.model.Project;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +33,7 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "assignee")
+    @ToString.Exclude
     private List<Issue> assignedIssues = new ArrayList<>();
 
 }

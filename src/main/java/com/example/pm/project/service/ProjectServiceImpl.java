@@ -3,6 +3,7 @@ package com.example.pm.project.service;
 import com.example.pm.chat.exception.ChatException;
 import com.example.pm.chat.model.Chat;
 import com.example.pm.chat.model.ChatUserKey;
+import com.example.pm.chat.repository.ChatRepository;
 import com.example.pm.chat.repository.ChatUserRepository;
 import com.example.pm.chat.service.ChatService;
 import com.example.pm.project.exception.ProjectException;
@@ -47,6 +48,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ChatRepository chatRepository;
 
     @Override
     public Project createProject(Project project, User user) throws UserException {
@@ -137,6 +141,13 @@ public class ProjectServiceImpl implements ProjectService {
         User user = userService.findUserById(userId);
         System.out.println("user ____>" + user);
         if (user != null) {
+            projectUserRepository.deleteByProjectId(projectId);
+            Chat chat = chatRepository.findByProjectId(projectId);
+
+            chatUserRepository.deleteByChatId(chat.getId());
+            chatRepository.deleteByProjectId(projectId);
+
+
             projectRepository.deleteById(projectId);
             return "project deleted";
         }

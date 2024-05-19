@@ -5,6 +5,7 @@ import com.example.pm.issue.model.Issue;
 import com.example.pm.issue.model.Status;
 import com.example.pm.project.exception.ProjectException;
 import com.example.pm.res.request.IssueRequest;
+import com.example.pm.res.request.UpdateIssueRequest;
 import com.example.pm.user.exception.UserException;
 import com.example.pm.user.model.User;
 
@@ -21,7 +22,7 @@ public interface IssueService {
 
     Issue createIssue(IssueRequest issue, Long userid) throws UserException, IssueException, ProjectException;
 
-    Optional<Issue> updateIssue(Long issueid, IssueRequest updatedIssue) throws IssueException, UserException, ProjectException;
+    Optional<Issue> updateIssue(Long issueid, UpdateIssueRequest updatedIssue) throws IssueException, UserException, ProjectException;
 
     String deleteIssue(Long issueId, Long userid) throws UserException, IssueException;
 

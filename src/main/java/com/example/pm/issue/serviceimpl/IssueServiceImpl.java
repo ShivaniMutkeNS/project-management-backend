@@ -10,6 +10,7 @@ import com.example.pm.project.exception.ProjectException;
 import com.example.pm.project.model.Project;
 import com.example.pm.project.service.ProjectService;
 import com.example.pm.res.request.IssueRequest;
+import com.example.pm.res.request.UpdateIssueRequest;
 import com.example.pm.user.exception.UserException;
 import com.example.pm.user.model.User;
 import com.example.pm.user.service.UserService;
@@ -88,48 +89,24 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Optional<Issue> updateIssue(Long issueId, IssueRequest updatedIssue)
+    public Optional<Issue> updateIssue(Long issueId, UpdateIssueRequest updatedIssue)
             throws IssueException, UserException, ProjectException {
         //User user = getUserOrThrow(userId);
         Optional<Issue> existingIssue = issueRepository.findById(issueId);
 
         if (existingIssue.isPresent()) {
-            // Check if the project exists
-            Project project = projectService.getProjectById(updatedIssue.getProjectId());
-            if (project == null) {
-                throw new IssueException("Project not found with ID: " + updatedIssue.getProjectId());
-            }
-
-            User assignee = userService.findUserById(updatedIssue.getUserId());
-            if (assignee == null) {
-                throw new UserException("Assignee not found with ID: " + updatedIssue.getUserId());
-            }
 
             Issue issueToUpdate = existingIssue.get();
-
-            issueToUpdate.setAssignee(assignee);
 
             if (updatedIssue.getDescription() != null) {
                 issueToUpdate.setDescription(updatedIssue.getDescription());
             }
 
-            if (updatedIssue.getDueDate() != null) {
-                issueToUpdate.setDueDate(updatedIssue.getDueDate());
-            }
-
-            if (updatedIssue.getPriority() != null) {
-                issueToUpdate.setPriority(updatedIssue.getPriority());
-            }
-
-            if (updatedIssue.getStatus() != null) {
-                issueToUpdate.setStatus(updatedIssue.getStatus());
-            }
 
             if (updatedIssue.getTitle() != null) {
                 issueToUpdate.setTitle(updatedIssue.getTitle());
             }
 
-            // Save the updated issue
             return Optional.of(issueRepository.save(issueToUpdate));
         }
 

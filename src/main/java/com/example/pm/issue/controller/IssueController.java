@@ -7,6 +7,7 @@ import com.example.pm.issue.model.Status;
 import com.example.pm.issue.service.IssueService;
 import com.example.pm.project.exception.ProjectException;
 import com.example.pm.res.request.IssueRequest;
+import com.example.pm.res.request.UpdateIssueRequest;
 import com.example.pm.user.UserDTO.AuthResponse;
 import com.example.pm.user.exception.UserException;
 import com.example.pm.user.model.User;
@@ -82,10 +83,10 @@ public class IssueController {
     }
 
     @PutMapping("/{issueId}")
-    public ResponseEntity<Issue> updateIssue(@PathVariable Long issueId, @RequestBody IssueRequest updatedIssue,
+    public ResponseEntity<Issue> updateIssue(@PathVariable Long issueId, @RequestBody UpdateIssueRequest updatedIssue,
                                              @RequestHeader("Authorization") String token) throws IssueException, UserException, ProjectException {
         User user = userService.findUserProfileByJwt(token);
-        System.out.println("user______>"+user);
+        System.out.println("user______update issue>"+user);
         Issue updated = issueService.updateIssue(issueId,updatedIssue).get();
 
         return updated != null ?

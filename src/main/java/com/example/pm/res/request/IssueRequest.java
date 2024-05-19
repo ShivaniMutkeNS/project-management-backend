@@ -21,3 +21,4 @@ public class IssueRequest {
 	private Long userId;
 
 }
+
