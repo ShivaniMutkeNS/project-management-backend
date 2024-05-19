@@ -50,7 +50,7 @@ public class AppConfig {
                         "http://localhost:5174",
                         "https://pm-kappa-swart.vercel.app/",
                         "https://pm-git-master-shivanimutkens-projects.vercel.app/",
-                        "https://project-management-react-plum.vercel.app"));
+                        "https://pm-gbsivpjtv-shivanimutkens-projects.vercel.app/"));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
                 cfg.setAllowedHeaders(Collections.singletonList("*"));

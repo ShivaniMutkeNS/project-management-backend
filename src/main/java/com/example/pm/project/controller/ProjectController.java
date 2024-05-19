@@ -5,7 +5,6 @@ import com.example.pm.chat.model.Chat;
 import com.example.pm.invitation.exception.MailsException;
 import com.example.pm.invitation.model.Invitation;
 import com.example.pm.invitation.service.InvitationService;
-import com.example.pm.invitation.serviceimpl.InviteServiceImpl;
 import com.example.pm.project.exception.ProjectException;
 import com.example.pm.project.model.Project;
 import com.example.pm.project.repository.ProjectRepository;
@@ -154,6 +153,7 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
     @DeleteMapping("/{projectId}/users/{userId}")
     public ResponseEntity<?> removeUserFromProject(@PathVariable Long projectId, @PathVariable Long userId) throws UserException, ProjectException {
         return projectService.removeUserFromProject(projectId, userId);
@@ -168,7 +168,7 @@ public class ProjectController {
 
         invitationService.sendInvitation(req.getEmail(), req.getProjectId());
 
-        MessageResponse res=new MessageResponse();
+        MessageResponse res = new MessageResponse();
         res.setMessage("User invited to the project successfully");
         return ResponseEntity.ok(res);
 
@@ -178,13 +178,13 @@ public class ProjectController {
     public ResponseEntity<Invitation> acceptInvitation(@RequestParam String token,
                                                        @RequestHeader("Authorization") String jwt) throws Exception {
 
-        User user=userService.findUserProfileByJwt(jwt);
+        User user = userService.findUserProfileByJwt(jwt);
 
-        Invitation invitation = invitationService.acceptInvitation(token,user.getId());
-        User invitedUser= userService.findUserByEmail(invitation.getEmail());
-        projectService.addUserToProject(invitation.getProjectId(),invitedUser.getId());
+        Invitation invitation = invitationService.acceptInvitation(token, user.getId());
+        User invitedUser = userService.findUserByEmail(invitation.getEmail());
+        projectService.addUserToProject(invitation.getProjectId(), invitedUser.getId());
 
-        return new ResponseEntity<>(invitation,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(invitation, HttpStatus.ACCEPTED);
     }
 
 }
