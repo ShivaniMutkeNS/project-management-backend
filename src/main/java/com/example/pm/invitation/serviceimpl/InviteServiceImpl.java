@@ -6,11 +6,9 @@ import com.example.pm.invitation.model.Invitation;
 import com.example.pm.invitation.repository.InvitationRepository;
 import com.example.pm.invitation.service.EmailService;
 import com.example.pm.invitation.service.InvitationService;
-
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.UUID;
 
@@ -35,18 +33,20 @@ public class InviteServiceImpl implements InvitationService {
         invitationRepository.save(invitation);
 
 
-        String invitationLink = "https://pm-git-master-shivanimutkens-projects.vercel.app/accept_invitation?token=" + invitationToken;
-        String secondLink = "https://project-management-react-plum.vercel.app/accept_invitation?token= "+ invitationToken;
-        emailService.sendEmailWithToken(email, invitationLink, secondLink);
+        String invitationLink = "https://pm-git-master-shivanimutkens-projects.vercel.app/accept_invitation?token="+invitationToken;
+        String secondLink = "https://project-management-react-plum.vercel.app/accept_invitation?token="+invitationToken;
+        String localHostLink = "http://localhost:5173/accept_invitation?token="+invitationToken;
+
+        emailService.sendEmailWithToken(email, invitationLink, secondLink, localHostLink);
 
     }
 
     @Override
-    public Invitation acceptInvitation(String token,Long userId) throws Exception {
+    public Invitation acceptInvitation(String token, Long userId) throws Exception {
         Invitation invitation = invitationRepository.findByToken(token);
 
         if (invitation == null) {
-            throw new Exception("Invalid invitation token") ;
+            throw new Exception("Invalid invitation token");
         }
 
         return invitation;
@@ -61,7 +61,7 @@ public class InviteServiceImpl implements InvitationService {
 
     @Override
     public String getTokenByUserMail(String userEmail) {
-        Invitation token= invitationRepository.findByEmail(userEmail);
+        Invitation token = invitationRepository.findByEmail(userEmail);
         return token.getToken();
     }
 

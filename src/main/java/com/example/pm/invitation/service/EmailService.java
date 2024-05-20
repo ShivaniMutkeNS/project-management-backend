@@ -16,13 +16,13 @@ public class EmailService {
     private JavaMailSender javaMailSender;
 
 
-    public void sendEmailWithToken(String userEmail, String link ,String  secondLink) throws MessagingException, MailsException {
+    public void sendEmailWithToken(String userEmail, String link ,String  secondLink, String localHostLink ) throws MessagingException, MailsException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
 
         String subject = "Join Project Team Invitation";
-        String text = "Click the link to join the project team: " + link +"\n"+ secondLink;
+        String text = "Click the link to join the project team: " + link +"\n"+ secondLink +"\n"+ localHostLink;
 
         helper.setSubject(subject);
         helper.setText(text, true);
