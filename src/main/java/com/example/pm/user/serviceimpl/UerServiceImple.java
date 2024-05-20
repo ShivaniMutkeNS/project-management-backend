@@ -31,6 +31,7 @@ public class UerServiceImple implements UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Override
     public User findUserProfileByJwt(String jwt) throws UserException {
         String email = JwtProvider.getEmailFromJwtToken(jwt);
@@ -102,11 +103,14 @@ public class UerServiceImple implements UserService {
         // Save the token in the database
         PasswordResetToken passwordResetToken = new PasswordResetToken(resetToken, user, expiryDate);
         passwordResetTokenRepository.save(passwordResetToken);
-
+        String message = "Click the following link to reset your password: http://localhost:5173/reset-password?token=" + resetToken
+                + "\n for vercel app" + "https://project-management-react-plum.vercel.app/accept_invitation?token=" + resetToken
+                + "\n 2nd vercel app link " + "https://pm-git-master-shivanimutkens-projects.vercel.app/accept_invitation?token=" + resetToken
+                + "\n 3rd vercel app link " + "http://localhost:5173/accept_invitation?token=" + resetToken;
         // Send an email containing the reset link
+
         sendEmail(user.getEmail(), "Password Reset",
-                "Click the following link to reset your password: http://localhost:5454/reset-password?token="
-                        + resetToken);
+                message);
     }
 
     private void sendEmail(String to, String subject, String message) {
