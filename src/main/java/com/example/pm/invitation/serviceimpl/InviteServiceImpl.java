@@ -34,10 +34,10 @@ public class InviteServiceImpl implements InvitationService {
 
 
         String invitationLink = "https://pm-git-master-shivanimutkens-projects.vercel.app/accept_invitation?token="+invitationToken;
-        String secondLink = "https://project-management-react-plum.vercel.app/accept_invitation?token="+invitationToken;
-        String localHostLink = "http://localhost:5173/accept_invitation?token="+invitationToken;
+       // String secondLink = "https://project-management-react-plum.vercel.app/accept_invitation?token="+invitationToken;
+      //  String localHostLink = "http://localhost:5173/accept_invitation?token="+invitationToken;
 
-        emailService.sendEmailWithToken(email, invitationLink, secondLink, localHostLink);
+        emailService.sendEmailWithToken(email, invitationLink, "", "");
 
     }
 
