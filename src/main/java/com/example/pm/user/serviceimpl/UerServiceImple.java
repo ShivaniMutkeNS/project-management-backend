@@ -107,7 +107,6 @@ public class UerServiceImple implements UserService {
                //+ " http://localhost:5173/reset-password?token=" + resetToken
                // + "\n for vercel app" + "https://project-management-react-plum.vercel.app/reset-password?token=" + resetToken
                 + "\n 2nd vercel app link " + "https://pm-git-master-shivanimutkens-projects.vercel.app/reset-password?token=" + resetToken
-              //  + "\n 3rd vercel app link " + "http://localhost:5173/reset-password?token=" + resetToken;
                   ;
         // Send an email containing the reset link
 
